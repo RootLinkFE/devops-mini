@@ -28,19 +28,19 @@ elif [[ $branchName == $masterBranch ]];then
     git clone $repositoryUrl
 elif [[ $branchName == $prodBranch ]];then
     echo "包含prod"
-    git clone -b g-miniprograme $repositoryUrl
+    git clone -b prod $repositoryUrl
 elif [[ $branchName == $devBranch ]];then
     echo "包含dev"
-    git clone -b g-miniprograme $repositoryUrl
+    git clone -b dev $repositoryUrl
 else
     echo "默认执行test分支代码"
-    git clone -b g-miniprograme $repositoryUrl
+    git clone -b dev1 $repositoryUrl
 fi
 
 wait
 
 # 将代码放到github runner 执行目录下
-cd g-miniprograme && mv * ../ 
+cd dev1 && mv * ../ 
 
 pwd
 
