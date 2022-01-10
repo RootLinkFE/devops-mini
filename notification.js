@@ -5,7 +5,7 @@ const md5 = require('md5')
 const exec = require('child_process').exec
 const WEB_HOOK = process.env.WECOM_WEBHOOK_KEY
 const projectName = process.env.PROJECT_NAME
-const branchName = process.argv[1]
+const branchName = process.argv[2]
 
 function getImgParams() {
   const previewImgPath = path.join('./preview.png')
