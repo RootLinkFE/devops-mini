@@ -26,5 +26,26 @@ echo git config --global credential.helper store
 
 echo git clone -b test $repositoryUrl
 
+if [[ $branchName == $testBranch ]];then
+    echo "包含test"
+    git clone -b test $repositoryUrl
+elif [[ $branchName == $masterBranch ]];then
+    echo "包含master"
+    git clone $repositoryUrl
+elif [[ $branchName == $prodBranch ]];then
+    echo "包含prod"
+    git clone -b prod $repositoryUrl
+elif [[ $branchName == $devBranch ]];then
+    echo "包含dev"
+    git clone -b dev $repositoryUrl
+else
+    echo "默认执行test分支代码"
+    git clone -b test $repositoryUrl
+fi
+
 # 将代码放到github runner 执行目录下
-cd g-miniprogram && mv * ../ 
+cd $branchName && mv * ../ 
+
+pwd
+
+ls -l
