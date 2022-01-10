@@ -16,11 +16,7 @@ function log() {
   echo "$(date)>>>>$@"
 }
 
-# 登录
-
-echo git config --global user.name $username
-echo git config --global user.email $password
-echo git config --global credential.helper store
+ls -l
 
 # 克隆分支代码
 
@@ -44,7 +40,7 @@ else
 fi
 
 # 将代码放到github runner 执行目录下
-cd $branchName && mv * ../ 
+cd g-miniprograme && mv * ../ 
 
 pwd
 
