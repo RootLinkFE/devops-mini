@@ -48,7 +48,7 @@ fi
 # cd ..  
 
 # 将代码放到github runner 执行目录下
-cd g-miniprogram && mv * ../ 
+cd g-miniprograme && mv * ../ 
 
 pwd
 
