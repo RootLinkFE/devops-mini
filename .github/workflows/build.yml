@@ -1,0 +1,70 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: 小程序上传预览
+
+on:
+  workflow_dispatch:
+    inputs:
+      buildBranch:
+        description: '输入构建分支(dev/test/prod)'
+        required: true
+        default: 'test'
+
+env:
+  GITLAB_REPO_URL: ${{ secrets.GITLAB_REPO_URL }}
+  GITLAB_REPO_USERNAME: ${{ secrets.GITLAB_REPO_USERNAME }}
+  GITLAB_REPO_PASSWORD: ${{ secrets.GITLAB_REPO_PASSWORD }}
+  WECOM_WEBHOOK_KEY: ${{ secrets.WECOM_WEBHOOK_KEY }}
+  PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.0.0]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          registry-url: 'https://registry.npmjs.org'
+
+      # Get commit message
+      - name: Get commit message
+        run: |
+          COMMIT_MESSAGE=$(git log --format=%s -n 1)
+          echo "commitmsg=${COMMIT_MESSAGE}" >> $GITHUB_ENV
+      - name: Show commit message
+        run: |
+          echo "$commitmsg"
+          echo "${{ github.event.inputs.buildBranch }}"
+
+      - name: Install CI Dependencies
+        run: npx yarn
+
+      - name: Checkout code
+        run: |
+          bash ./shell/checkout.sh "${{ github.event.inputs.buildBranch }}"
+
+      - name: Install Project Dependencies
+        run: npx yarn
+
+      - name: Build
+        run: npm run build:"${{ github.event.inputs.buildBranch }}"
+
+      # see Project/Settings/Secrets
+      - name: Generate private key for upload
+        run: echo "$UPLOAD_PRIVATE_KEY" > private.key
+        env:
+          UPLOAD_PRIVATE_KEY: ${{ secrets.UPLOAD_PRIVATE_KEY }}
+
+      - name: Upload to WeChat
+        run: npx mp-ci preview ./ --pkp=./private.key
+
+      - name: Notification
+        run: node ./notification.js
