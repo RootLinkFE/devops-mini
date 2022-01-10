@@ -32,6 +32,7 @@ function noticeMsg() {
         markdown: {
           content: `
           >项目名称：<font color="green">${projectName}</font>
+          >分支：<font color="green">${branchName}</font>
           >最新的提交commitId和记录：${stdout}
           >发布人：github action
           >发布时间：<font color="comment">${newDate}</font>
