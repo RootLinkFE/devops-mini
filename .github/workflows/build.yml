@@ -49,7 +49,7 @@ jobs:
 
       - name: Checkout code
         run: |
-          bash ./shell/checkout.sh "${{ github.event.inputs.buildBranch }}"
+          bash ./checkout.sh "${{ github.event.inputs.buildBranch }}"
 
       - name: Install Project Dependencies
         run: npx yarn
