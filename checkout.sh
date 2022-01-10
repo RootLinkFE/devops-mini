@@ -22,7 +22,7 @@ ls -l
 
 if [[ $branchName == $testBranch ]];then
     echo "包含test"
-    git clone -b test $repositoryUrl
+    git clone -b dev1 $repositoryUrl
 elif [[ $branchName == $masterBranch ]];then
     echo "包含master"
     git clone $repositoryUrl
