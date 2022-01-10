@@ -40,7 +40,7 @@ fi
 wait
 
 # 将代码放到github runner 执行目录下
-cd dev1 && mv * ../ 
+cd g-miniprograme && mv * ../ 
 
 pwd
 
