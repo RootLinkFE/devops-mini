@@ -25,11 +25,3 @@ echo git config --global credential.helper store
 # 克隆分支代码
 echo git clone -b test $repositoryUrl
 
-
-
-# 将代码放到github runner 执行目录下
-echo cd g-miniprograme && mv * ../ 
-
-pwd
-
-ls -l
