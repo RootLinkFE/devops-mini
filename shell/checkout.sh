@@ -23,5 +23,33 @@ echo git config --global user.email $password
 echo git config --global credential.helper store
 
 # 克隆分支代码
-echo git clone -b test $repositoryUrl
 
+if [[ $branchName == $testBranch ]];then
+    echo "包含test"
+    git clone -b test $repositoryUrl
+elif [[ $branchName == $masterBranch ]];then
+    echo "包含master"
+    git clone $repositoryUrl
+elif [[ $branchName == $prodBranch ]];then
+    echo "包含prod"
+    git clone -b prod $repositoryUrl
+elif [[ $branchName == $devBranch ]];then
+    echo "包含dev"
+    git clone -b dev $repositoryUrl
+else
+    echo "默认执行test分支代码"
+    git clone -b test $repositoryUrl
+fi
+
+# cd g-crm-app 
+# log "$(git branch)"
+# # 拉取最新代码
+# git pull
+# cd ..  
+
+# 将代码放到github runner 执行目录下
+cd g-miniprograme && mv * ../ 
+
+pwd
+
+ls -l
