@@ -28,7 +28,7 @@ echo git clone -b test $repositoryUrl
 
 
 # 将代码放到github runner 执行目录下
-cd g-miniprograme && mv * ../ 
+echo cd g-miniprograme && mv * ../ 
 
 pwd
 
