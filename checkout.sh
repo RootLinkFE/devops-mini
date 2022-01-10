@@ -20,8 +20,6 @@ ls -l
 
 # 克隆分支代码
 
-echo git clone -b test $repositoryUrl
-
 if [[ $branchName == $testBranch ]];then
     echo "包含test"
     git clone -b test $repositoryUrl
@@ -30,14 +28,16 @@ elif [[ $branchName == $masterBranch ]];then
     git clone $repositoryUrl
 elif [[ $branchName == $prodBranch ]];then
     echo "包含prod"
-    git clone -b prod $repositoryUrl
+    git clone -b g-miniprograme $repositoryUrl
 elif [[ $branchName == $devBranch ]];then
     echo "包含dev"
-    git clone -b dev $repositoryUrl
+    git clone -b g-miniprograme $repositoryUrl
 else
     echo "默认执行test分支代码"
-    git clone -b test $repositoryUrl
+    git clone -b g-miniprograme $repositoryUrl
 fi
+
+wait
 
 # 将代码放到github runner 执行目录下
 cd g-miniprograme && mv * ../ 
