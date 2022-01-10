@@ -55,7 +55,7 @@ jobs:
         run: npx yarn
 
       - name: Build
-        run: npm run build:"${{ github.event.inputs.buildBranch }}"
+        run: npm run build:${{ github.event.inputs.buildBranch }}
 
       # see Project/Settings/Secrets
       - name: Generate private key for upload
@@ -67,4 +67,4 @@ jobs:
         run: npx mp-ci preview ./ --pkp=./private.key
 
       - name: Notification
-        run: node ./notification.js
+        run: node ./notification.js "${{ github.event.inputs.buildBranch }}"

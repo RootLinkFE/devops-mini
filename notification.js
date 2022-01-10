@@ -5,6 +5,7 @@ const md5 = require('md5')
 const exec = require('child_process').exec
 const WEB_HOOK = process.env.WECOM_WEBHOOK_KEY
 const projectName = process.env.PROJECT_NAME
+const branchName = process.argv[1]
 
 function getImgParams() {
   const previewImgPath = path.join('./preview.png')
@@ -30,13 +31,14 @@ function noticeMsg() {
         msgtype: 'markdown',
         markdown: {
           content: `
-          >项目名称：${projectName}
+          >项目名称：<font color="green">${projectName}</font>
+          >分支：<font color="green">${branchName}</font>
           >最新的提交commitId和记录：${stdout}
-          >发布人：<font color="error">github action</font>
-          >发布时间：${newDate}
-          >二维码失效时间： ${new Date(
+          >发布人：github action
+          >发布时间：<font color="comment">${newDate}</font>
+          >二维码失效时间： <font color="comment">${new Date(
             newDate.setMinutes(newDate.getMinutes() + 30)
-          )}`
+          )}</font>`
         }
       }
       request.post(
