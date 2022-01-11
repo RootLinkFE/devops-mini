@@ -10,6 +10,10 @@ on:
         description: '输入构建分支(dev/test/prod)'
         required: true
         default: 'test'
+      uploadAction:
+        description: '是否上传到微信开发者平台(true/false)'
+        required: false
+        default: 'false'
 
 env:
   GITLAB_REPO_URL: ${{ secrets.GITLAB_REPO_URL }}
@@ -64,8 +68,15 @@ jobs:
         env:
           UPLOAD_PRIVATE_KEY: ${{ secrets.UPLOAD_PRIVATE_KEY }}
 
-      - name: Upload to WeChat
+      - name: Preview
         run: npx mp-ci preview ./ --pkp=./private.key
 
-      - name: Notification
-        run: node ./notification.js ${{ github.event.inputs.buildBranch }}
+      - name: Notification Preview
+        run: node ./notification.js ${{ github.event.inputs.buildBranch }} preview
+
+      - name: Upload to Wechat
+        if: ${{ github.event.inputs.uploadAction == 'true' }}
+        run: npx mp-ci upload ./ --pkp=./private.key
+
+      - name: Notification Upload
+        run: node ./notification.js ${{ github.event.inputs.buildBranch }} upload
