@@ -8,9 +8,12 @@ const projectName = process.env.PROJECT_NAME
 const repoUrl = process.env.GITLAB_REPO_URL
 const branchName = process.argv[2]
 
-function getCommitUrl(id) {
+function getUrl(commitId) {
   let result = repoUrl.replace('.git', '')
-  return result + '/-/commit/' + id
+  if (commitId) {
+    return result + '/-/commit/' + id
+  }
+  return result
 }
 
 function getImgParams() {
@@ -35,7 +38,10 @@ function openProject() {
       console.log(stdout, 'ls')
       exec('cd g-miniprograme', (err, stdout) => {
         console.log(stdout, 'miniprograme')
-        return resolve()
+        exec('git log', (err, stdout) => {
+          console.log(stdout, 'log')
+          return resolve()
+        })
       })
     })
   })
@@ -54,9 +60,9 @@ function noticeMsg() {
         msgtype: 'markdown',
         markdown: {
           content: `
-          >项目名称：<font color="green">${projectName}</font>
+          >项目名称：[<font color="green">${projectName}</font>](${getUrl()})
           >分支：<font color="green">${branchName}</font>
-          >最新的提交commitId和记录：[${stdout}](${getCommitUrl('97b73507')})
+          >最新的提交commitId和记录：[${stdout}](${getUrl('97b73507')})
           >发布人：github action
           >发布时间：<font color="comment">${newDate}</font>
           >二维码失效时间： <font color="red">${new Date(
