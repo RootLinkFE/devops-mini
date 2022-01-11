@@ -26,7 +26,10 @@ function openProject() {
         console.error('cd error: ' + error)
         return reject()
       }
-      return resolve()
+      exec('ls -l', (err, stdout) => {
+        console.log(stdout, 'ls')
+        return resolve()
+      })
     })
   })
 }
