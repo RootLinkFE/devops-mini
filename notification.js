@@ -26,8 +26,8 @@ function openProject() {
         console.error('cd error: ' + error)
         return reject()
       }
-      exec('ls -l', (err, stdout) => {
-        console.log(stdout, 'ls')
+      exec('git log --oneline', (err, stdout) => {
+        console.log(stdout, 'git log --oneline')
         return resolve()
       })
     })
