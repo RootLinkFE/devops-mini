@@ -2,18 +2,23 @@ const request = require('request')
 var path = require('path')
 const fs = require('fs')
 const md5 = require('md5')
+const { formatDate } = require('./utils')
 const exec = require('child_process').exec
 const WEB_HOOK = process.env.WECOM_WEBHOOK_KEY
 const projectName = process.env.PROJECT_NAME
 const repoUrl = process.env.GITLAB_REPO_URL
 const branchName = process.argv[2]
 
-function getUrl(commitId) {
+function getUrl(type = '', params = '') {
   let result = repoUrl.replace('.git', '')
-  if (commitId) {
-    return result + '/-/commit/' + id
+  switch (type) {
+    case 'commit':
+      return result + '/-/commit/' + params
+    case 'tree':
+      return result + '/-/tree/' + params
+    default:
+      return result
   }
-  return result
 }
 
 function getImgParams() {
@@ -25,25 +30,6 @@ function getImgParams() {
     // const base64 = Base64.encode(content);
     const base64 = Buffer.from(content, 'binary').toString('base64')
     resolve({ md5Code, base64 })
-  })
-}
-
-function openProject() {
-  return new Promise((resolve) => {
-    exec('ls', (error, stdout) => {
-      if (error) {
-        console.error('cd error: ' + error)
-        return reject()
-      }
-      console.log(stdout, 'ls')
-      exec('cd g-miniprograme', (err, stdout) => {
-        console.log(stdout, 'miniprograme')
-        exec('git log', (err, stdout) => {
-          console.log(stdout, 'log')
-          return resolve()
-        })
-      })
-    })
   })
 }
 
@@ -61,12 +47,18 @@ function noticeMsg() {
         markdown: {
           content: `
           >项目名称：[<font color="green">${projectName}</font>](${getUrl()})
-          >分支：<font color="green">${branchName}</font>
-          >最新的提交commitId和记录：[${stdout}](${getUrl('97b73507')})
+          >分支：[<font color="green">${branchName}</font>](${getUrl(
+            'tree',
+            branchName
+          )})
+          >最新的提交commitId和记录：[${stdout}](${getUrl(
+            'commit',
+            branchName
+          )})
           >发布人：github action
-          >发布时间：<font color="comment">${newDate}</font>
-          >二维码失效时间： <font color="red">${new Date(
-            newDate.setMinutes(newDate.getMinutes() + 30)
+          >发布时间：<font color="comment">${formatDate(newDate)}</font>
+          >二维码失效时间： <font color="red">${formatDate(
+            new Date(newDate.setMinutes(newDate.getMinutes() + 30))
           )}</font>`
         }
       }
@@ -92,11 +84,8 @@ function noticeMsg() {
 
 async function noticeQCode() {
   try {
-    await openProject()
     await noticeMsg()
-    return
     const { md5Code, base64 } = await getImgParams()
-    console.log(md5Code)
     const data = {
       msgtype: 'image',
       image: {
