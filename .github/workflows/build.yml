@@ -68,4 +68,4 @@ jobs:
       #   run: npx mp-ci preview ./ --pkp=./private.key
 
       - name: Notification
-        run: node ./notification.js "${{ github.event.inputs.buildBranch }}"
+        run: node ./notification.js ${{ github.event.inputs.buildBranch }}

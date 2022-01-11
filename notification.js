@@ -5,7 +5,13 @@ const md5 = require('md5')
 const exec = require('child_process').exec
 const WEB_HOOK = process.env.WECOM_WEBHOOK_KEY
 const projectName = process.env.PROJECT_NAME
+const repoUrl = process.env.GITLAB_REPO_URL
 const branchName = process.argv[2]
+
+function getCommitUrl(id) {
+  let result = repoUrl.replace('.git', '')
+  return result + '/-/commit/' + id
+}
 
 function getImgParams() {
   const previewImgPath = path.join('./preview.png')
@@ -21,12 +27,12 @@ function getImgParams() {
 
 function openProject() {
   return new Promise((resolve) => {
-    exec('ls -l', (error, stdout) => {
+    exec('dir', (error, stdout) => {
       if (error) {
         console.error('cd error: ' + error)
         return reject()
       }
-      console.log('ls')
+      console.log('dir')
       exec('cd g-miniprograme', (err, stdout) => {
         console.log(stdout, 'miniprograme')
         return resolve()
@@ -37,6 +43,7 @@ function openProject() {
 
 function noticeMsg() {
   const newDate = new Date()
+  console.log(getCommitUrl('97b73507'))
   return new Promise((resolve, reject) => {
     exec('git log --oneline -1', (error, stdout) => {
       if (error) {
@@ -49,7 +56,7 @@ function noticeMsg() {
           content: `
           >项目名称：<font color="green">${projectName}</font>
           >分支：<font color="green">${branchName}</font>
-          >最新的提交commitId和记录：${stdout}
+          >最新的提交commitId和记录：[${stdout}](${getCommitUrl('97b73507')})
           >发布人：github action
           >发布时间：<font color="comment">${newDate}</font>
           >二维码失效时间： <font color="red">${new Date(
@@ -81,6 +88,7 @@ async function noticeQCode() {
   try {
     await openProject()
     await noticeMsg()
+    return
     const { md5Code, base64 } = await getImgParams()
     console.log(md5Code)
     const data = {
