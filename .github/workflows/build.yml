@@ -52,31 +52,32 @@ jobs:
       - name: Install CI Dependencies
         run: npx yarn
 
-      - name: Checkout code
-        run: |
-          bash ./checkout.sh "${{ github.event.inputs.buildBranch }}"
+      # - name: Checkout code
+      #   run: |
+      #     bash ./checkout.sh "${{ github.event.inputs.buildBranch }}"
 
-      - name: Install Project Dependencies
-        run: npx yarn
+      # - name: Install Project Dependencies
+      #   run: npx yarn
 
-      - name: Build
-        run: npm run build:${{ github.event.inputs.buildBranch }}
+      # - name: Build
+      #   run: npm run build:${{ github.event.inputs.buildBranch }}
 
-      # see Project/Settings/Secrets
-      - name: Generate private key for upload
-        run: echo "$UPLOAD_PRIVATE_KEY" > private.key
-        env:
-          UPLOAD_PRIVATE_KEY: ${{ secrets.UPLOAD_PRIVATE_KEY }}
+      # # see Project/Settings/Secrets
+      # - name: Generate private key for upload
+      #   run: echo "$UPLOAD_PRIVATE_KEY" > private.key
+      #   env:
+      #     UPLOAD_PRIVATE_KEY: ${{ secrets.UPLOAD_PRIVATE_KEY }}
 
-      - name: Preview
-        run: npx mp-ci preview ./ --pkp=./private.key
+      # - name: Preview
+      #   run: npx mp-ci preview ./ --pkp=./private.key
 
-      - name: Notification Preview
-        run: node ./notification.js ${{ github.event.inputs.buildBranch }} preview
+      # - name: Notification Preview
+      #   run: node ./notification.js ${{ github.event.inputs.buildBranch }} preview
 
       - name: Upload to Wechat
-        if: ${{ github.event.inputs.uploadAction == 'true' }}
+        if: github.event.inputs.uploadAction == 'true'
         run: npx mp-ci upload ./ --pkp=./private.key
 
       - name: Notification Upload
+        if: github.event.inputs.uploadAction == 'true'
         run: node ./notification.js ${{ github.event.inputs.buildBranch }} upload
