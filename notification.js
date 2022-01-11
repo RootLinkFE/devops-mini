@@ -19,12 +19,24 @@ function getImgParams() {
   })
 }
 
+function openProject() {
+  return new Promise((resolve) => {
+    exec('cd g-miniprograme', (error, stdout) => {
+      if (error) {
+        console.error('cd error: ' + error)
+        return reject()
+      }
+      return resolve()
+    })
+  })
+}
+
 function noticeMsg() {
   const newDate = new Date()
   return new Promise((resolve, reject) => {
     exec('git log --oneline -1', (error, stdout) => {
       if (error) {
-        console.error('error: ' + error)
+        console.error('git log error: ' + error)
         return reject()
       }
       const data = {
@@ -63,6 +75,7 @@ function noticeMsg() {
 
 async function noticeQCode() {
   try {
+    await openProject()
     await noticeMsg()
     const { md5Code, base64 } = await getImgParams()
     console.log(md5Code)
@@ -88,7 +101,7 @@ async function noticeQCode() {
       }
     )
   } catch (error) {
-    console.log('err')
+    console.log(error)
   }
 }
 
