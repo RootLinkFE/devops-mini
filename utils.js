@@ -3,6 +3,7 @@ module.exports = function formatDate(date) {
   const y = date.getFullYear()
   const m = date.getMonth() + 1
   const d = date.getDate()
+  date.setHour(date.getHours() + 8)
   let h = date.getHours()
   h = h < 10 ? '0' + h : h
   let mi = date.getMinutes()
@@ -19,5 +20,5 @@ module.exports = function formatDate(date) {
     '星期六'
   ]
   const day = date.getDay()
-  return y + "年" + m + "月" + d + "日 " + h + "时" + mi + "分" + s + "秒"
+  return y + '年' + m + '月' + d + '日 ' + h + '时' + mi + '分' + s + '秒'
 }
