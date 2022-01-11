@@ -21,13 +21,14 @@ function getImgParams() {
 
 function openProject() {
   return new Promise((resolve) => {
-    exec('cd g-miniprograme', (error, stdout) => {
+    exec('ls -l', (error, stdout) => {
       if (error) {
         console.error('cd error: ' + error)
         return reject()
       }
-      exec('git log --oneline', (err, stdout) => {
-        console.log(stdout, 'git log --oneline')
+      console.log('ls')
+      exec('cd g-miniprograme', (err, stdout) => {
+        console.log(stdout, 'miniprograme')
         return resolve()
       })
     })
