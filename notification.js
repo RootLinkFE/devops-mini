@@ -32,7 +32,7 @@ function openProject() {
         console.error('cd error: ' + error)
         return reject()
       }
-      console.log('ls')
+      console.log(stdout, 'ls')
       exec('cd g-miniprograme', (err, stdout) => {
         console.log(stdout, 'miniprograme')
         return resolve()
