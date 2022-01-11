@@ -27,12 +27,12 @@ function getImgParams() {
 
 function openProject() {
   return new Promise((resolve) => {
-    exec('dir', (error, stdout) => {
+    exec('ls', (error, stdout) => {
       if (error) {
         console.error('cd error: ' + error)
         return reject()
       }
-      console.log('dir')
+      console.log('ls')
       exec('cd g-miniprograme', (err, stdout) => {
         console.log(stdout, 'miniprograme')
         return resolve()
