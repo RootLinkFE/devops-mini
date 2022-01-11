@@ -1,8 +1,8 @@
 const request = require('request')
-var path = require('path')
+const path = require('path')
 const fs = require('fs')
 const md5 = require('md5')
-const { formatDate } = require('./utils')
+const formatDate = require('./utils')
 const exec = require('child_process').exec
 const WEB_HOOK = process.env.WECOM_WEBHOOK_KEY
 const projectName = process.env.PROJECT_NAME
@@ -46,13 +46,9 @@ function noticeMsg() {
         msgtype: 'markdown',
         markdown: {
           content: `
-          >项目名称：[<font color="green">${projectName}</font>](${getUrl()})
-          >分支：[<font color="green">${branchName}</font>](${getUrl(
+          >项目名称：[<font color="blue">${projectName}</font>](${getUrl()})
+          >分支：[<font color="blue">${branchName}</font>](${getUrl(
             'tree',
-            branchName
-          )})
-          >最新的提交commitId和记录：[${stdout}](${getUrl(
-            'commit',
             branchName
           )})
           >发布人：github action
