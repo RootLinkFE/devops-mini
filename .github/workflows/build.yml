@@ -52,20 +52,20 @@ jobs:
         run: |
           bash ./checkout.sh "${{ github.event.inputs.buildBranch }}"
 
-      # - name: Install Project Dependencies
-      #   run: npx yarn
+      - name: Install Project Dependencies
+        run: npx yarn
 
-      # - name: Build
-      #   run: npm run build:${{ github.event.inputs.buildBranch }}
+      - name: Build
+        run: npm run build:${{ github.event.inputs.buildBranch }}
 
-      # # see Project/Settings/Secrets
-      # - name: Generate private key for upload
-      #   run: echo "$UPLOAD_PRIVATE_KEY" > private.key
-      #   env:
-      #     UPLOAD_PRIVATE_KEY: ${{ secrets.UPLOAD_PRIVATE_KEY }}
+      # see Project/Settings/Secrets
+      - name: Generate private key for upload
+        run: echo "$UPLOAD_PRIVATE_KEY" > private.key
+        env:
+          UPLOAD_PRIVATE_KEY: ${{ secrets.UPLOAD_PRIVATE_KEY }}
 
-      # - name: Upload to WeChat
-      #   run: npx mp-ci preview ./ --pkp=./private.key
+      - name: Upload to WeChat
+        run: npx mp-ci preview ./ --pkp=./private.key
 
       - name: Notification
         run: node ./notification.js ${{ github.event.inputs.buildBranch }}
