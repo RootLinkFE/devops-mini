@@ -39,18 +39,18 @@ jobs:
       #   run: |
       #     COMMIT_MESSAGE=$(git log --format=%s -n 1)
       #     echo "commitmsg=${COMMIT_MESSAGE}" >> $GITHUB_ENV
-      
+
       # - name: Show commit message
       #   run: |
       #     echo "$commitmsg"
       #     echo "${{ github.event.inputs.buildBranch }}"
 
-      # - name: Install CI Dependencies
-      #   run: npx yarn
+      - name: Install CI Dependencies
+        run: npx yarn
 
-      # - name: Checkout code
-      #   run: |
-      #     bash ./checkout.sh "${{ github.event.inputs.buildBranch }}"
+      - name: Checkout code
+        run: |
+          bash ./checkout.sh "${{ github.event.inputs.buildBranch }}"
 
       # - name: Install Project Dependencies
       #   run: npx yarn
