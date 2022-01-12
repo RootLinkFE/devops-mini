@@ -12,6 +12,7 @@
   "dependencies": {},
   "devDependencies": {
     "md5": "^2.3.0",
+    "mp-ci": "^1.2.1",
     "request": "^2.88.2"
   }
 }
