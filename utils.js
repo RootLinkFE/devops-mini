@@ -1,7 +1,7 @@
-
 const repoUrl = process.env.GITLAB_REPO_URL
 
-function formatDate(date) {
+function formatDate(newDate) {
+  const date = new Date(newDate)
   // 我们写一个 2019年 5月 1日 星期三
   const y = date.getFullYear()
   const m = date.getMonth() + 1
