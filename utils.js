@@ -6,7 +6,7 @@ function formatDate(date) {
   const y = date.getFullYear()
   const m = date.getMonth() + 1
   const d = date.getDate()
-  date.setHour(date.getHours() + 8)
+  date.setHours(date.getHours() + 8)
   let h = date.getHours()
   h = h < 10 ? '0' + h : h
   let mi = date.getMinutes()
