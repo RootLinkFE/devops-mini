@@ -1,4 +1,5 @@
 const { formatDate, getUrl } = require('./utils')
+const { noticeMsg } = require('./notification')
 const actionType = process.argv[3]
 const projectName = process.env.PROJECT_NAME
 const branchName = process.argv[2]
