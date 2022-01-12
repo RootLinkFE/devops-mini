@@ -9,7 +9,7 @@ async function sendSuccess() {
   const newDate = new Date()
   const content = `
   -----------${
-    actionType === 'preview' ? '小程序预览成功' : '小程序上传成功'
+    actionType === 'preview' ? '小程序预览通知' : '小程序上传通知'
   }---------- 
   >项目名称：[<font color="blue">${projectName}</font>](${getUrl()})
   >分支：[<font color="blue">${branchName}</font>](${getUrl(
