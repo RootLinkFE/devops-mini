@@ -1,3 +1,6 @@
+
+const repoUrl = process.env.GITLAB_REPO_URL
+
 function formatDate(date) {
   // 我们写一个 2019年 5月 1日 星期三
   const y = date.getFullYear()
@@ -24,8 +27,8 @@ function formatDate(date) {
 }
 
 // 获取gitlab地址
-function getUrl(url, type = '', params = '') {
-  let result = url.replace('.git', '')
+function getUrl(type = '', params = '') {
+  let result = repoUrl.replace('.git', '')
   switch (type) {
     case 'commit':
       return result + '/-/commit/' + params

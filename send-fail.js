@@ -2,7 +2,6 @@ const { getUrl } = require('./utils')
 const actionType = process.argv[3]
 const projectName = process.env.PROJECT_NAME
 const branchName = process.argv[2]
-const repoUrl = process.env.GITLAB_REPO_URL
 
 function sendFail() {
   const content = `
