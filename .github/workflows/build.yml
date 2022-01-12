@@ -76,7 +76,7 @@ jobs:
         run: node ./send-fail.js ${{ github.event.inputs.buildBranch }} preview
 
       - name: Notification Preview
-        run: node ./notification.js ${{ github.event.inputs.buildBranch }} preview
+        run: node ./send-success.js ${{ github.event.inputs.buildBranch }} preview
 
       - name: Upload to Wechat
         if: github.event.inputs.uploadAction == 'true'

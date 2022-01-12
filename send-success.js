@@ -1,11 +1,11 @@
 const { formatDate, getUrl } = require('./utils')
-const { noticeMsg } = require('./notification')
+const { noticeMsg, noticeQCode } = require('./notification')
 const actionType = process.argv[3]
 const projectName = process.env.PROJECT_NAME
 const branchName = process.argv[2]
 const repoUrl = process.env.GITLAB_REPO_URL
 
-function sendSuccess() {
+async function sendSuccess() {
   const newDate = new Date()
   const content = `
   -----------${
@@ -30,7 +30,12 @@ function sendSuccess() {
       : ''
   }`
 
-  noticeMsg(content)
+  if (actionType === 'preview') {
+    await noticeQCode()
+    await noticeMsg(content)
+  } else {
+    noticeMsg(content)
+  }
 }
 
 sendSuccess()

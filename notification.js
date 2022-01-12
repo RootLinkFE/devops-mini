@@ -55,8 +55,7 @@ function noticeMsg(content) {
 }
 
 async function noticeQCode() {
-  try {
-    await noticeMsg()
+  return new Promise((resolve, reject) => {
     const { md5Code, base64 } = await getImgParams()
     const data = {
       msgtype: 'image',
@@ -76,12 +75,12 @@ async function noticeQCode() {
       function (err, resp, body) {
         if (err) {
           console.error(err)
+          return reject()
         }
+        return resolve()
       }
     )
-  } catch (error) {
-    console.log(error)
-  }
+  })
 }
 
 module.exports = {
