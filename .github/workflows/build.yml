@@ -76,7 +76,7 @@ jobs:
 
       - name: Upload to Wechat
         if: github.event.inputs.uploadAction == 'true'
-        run: npx mp-ci upload ./ --pkp=./private.key
+        run: npx mp-ci upload ./ --pkp=./private.key --ver=1.0.1
 
       - name: On Failure
         if: ${{ failure() }}
