@@ -19,10 +19,10 @@ function sendSuccess() {
   >发布人：github action
   >结果：<font color="green">成功</font>
   >${
-    type === 'preview' ? '二维码预览时间' : '发布时间'
+    actionType === 'preview' ? '二维码预览时间' : '发布时间'
   }：<font color="comment">${formatDate(newDate)}</font>
   ${
-    type === 'preview'
+    actionType === 'preview'
       ? `>二维码失效时间： <font color="red">${formatDate(
           new Date(newDate.setMinutes(newDate.getMinutes() + 30))
         )}</font>`
