@@ -83,7 +83,7 @@ jobs:
         run: npx mp-ci upload ./ --pkp=./private.key
 
       - name: Upload On Failure
-        if: github.event.inputs.uploadAction == 'true' && ${{ failure() }}
+        if: ${{ failure() }}
         run: node ./send-fail.js ${{ github.event.inputs.buildBranch }} upload
 
       - name: Notification Upload
