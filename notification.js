@@ -54,8 +54,8 @@ function noticeMsg(content) {
   })
 }
 
-async function noticeQCode() {
-  return new Promise((resolve, reject) => {
+function noticeQCode() {
+  return new Promise(async (resolve, reject) => {
     const { md5Code, base64 } = await getImgParams()
     const data = {
       msgtype: 'image',
