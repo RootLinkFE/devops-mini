@@ -24,8 +24,8 @@ function formatDate(date) {
 }
 
 // 获取gitlab地址
-function getUrl(type = '', params = '') {
-  let result = repoUrl.replace('.git', '')
+function getUrl(url, type = '', params = '') {
+  let result = url.replace('.git', '')
   switch (type) {
     case 'commit':
       return result + '/-/commit/' + params

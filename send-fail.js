@@ -2,6 +2,7 @@ const { getUrl } = require('./utils')
 const actionType = process.argv[3]
 const projectName = process.env.PROJECT_NAME
 const branchName = process.argv[2]
+const repoUrl = process.env.GITLAB_REPO_URL
 
 function sendFail() {
   const content = `
@@ -10,6 +11,7 @@ function sendFail() {
   }---------- 
   >项目名称：[<font color="blue">${projectName}</font>](${getUrl()})
   >分支：[<font color="blue">${branchName}</font>](${getUrl(
+    repoUrl,
     'tree',
     branchName
   )})
